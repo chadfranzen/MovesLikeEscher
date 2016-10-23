@@ -28,6 +28,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CharacterController))]
 public class CustomOVRPlayerController : MonoBehaviour
 {
+    public float PlayerHeight = 3f;
     /// <summary>
     /// The rate acceleration during movement.
     /// </summary>
@@ -138,7 +139,7 @@ public class CustomOVRPlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        Ray ray = new Ray(transform.position, -transform.up * 3);
+        Ray ray = new Ray(transform.position, -transform.up * 6);
         RaycastHit hit;
         Debug.DrawRay(transform.position, -transform.up * 3, Color.red);
 
@@ -162,8 +163,30 @@ public class CustomOVRPlayerController : MonoBehaviour
                 Quaternion oldRotation = transform.rotation;
                 transform.RotateAround(transform.position, rotateVector, rotateDegrees);
                 Quaternion newRotation = transform.rotation;
-                transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 10f);
 
+                transform.rotation = newRotation;
+                Ray newRay = new Ray(transform.position, -transform.up * 3);
+                RaycastHit newHit;
+                if (Physics.Raycast(newRay, out newHit))
+                {
+                    if (newHit.normal != hit.normal && hit.transform.gameObject.GetComponent("QuarterPie"))
+                    {
+                        transform.rotation = oldRotation;
+                    } else
+                    {
+                        transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 40f);
+                    }
+                }
+
+
+            }
+
+            // Adjust the player's height so it is always PlayerHeight meters above the ground.
+            if (hit.transform.gameObject.GetComponent("Ramp") != null && !Mathf.Approximately(hit.distance, PlayerHeight) )
+            {
+                Debug.Log("Adjusting");
+                float diff = PlayerHeight - hit.distance;
+                transform.Translate(0, diff, 0);
             }
 
         }
@@ -184,6 +207,7 @@ public class CustomOVRPlayerController : MonoBehaviour
         globalMoveDirection += MoveThrottle.y * transform.up;
         globalMoveDirection += MoveThrottle.z * transform.forward;
         globalMoveDirection *= SimulationRate * Time.deltaTime;
+     //   globalMoveDirection += 1.0 * _transform.up
 
 
         // Offset correction for uneven ground

@@ -159,32 +159,28 @@ public class CustomOVRPlayerController : MonoBehaviour
                 {
                     rotateDegrees *= -1;
                 }
-                // Very hacky way of interpolating motion because I don't know how to Unity
-                Quaternion oldRotation = transform.rotation;
-                transform.RotateAround(transform.position, rotateVector, rotateDegrees);
-                Quaternion newRotation = transform.rotation;
 
-                transform.rotation = newRotation;
-                Ray newRay = new Ray(transform.position, -transform.up * 3);
-                RaycastHit newHit;
-                if (Physics.Raycast(newRay, out newHit))
-                {
-                    if (newHit.normal != hit.normal && hit.transform.gameObject.GetComponent("QuarterPie"))
-                    {
-                        transform.rotation = oldRotation;
-                    } else
-                    {
-                        transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 40f);
-                    }
-                }
+                Vector3 oldPosition = transform.position;
+                Debug.DrawRay(transform.position, rotateVector * 3, Color.magenta);
+                Quaternion oldRotation = transform.rotation;
+                transform.Translate(0, -hit.distance, 0);
+                transform.RotateAround(transform.position, rotateVector, rotateDegrees);
+                transform.Translate(0, hit.distance, 0);
+                Quaternion newRotation = transform.rotation;
+                Vector3 newPosition = transform.position;
+
+
+
+               transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 7f);
+               transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * 7f);
+
 
 
             }
 
             // Adjust the player's height so it is always PlayerHeight meters above the ground.
-            if (hit.transform.gameObject.GetComponent("Ramp") != null && !Mathf.Approximately(hit.distance, PlayerHeight) )
+            if (!Mathf.Approximately(hit.distance, PlayerHeight) && hit.transform.gameObject.GetComponent("Ramp"))
             {
-                Debug.Log("Adjusting");
                 float diff = PlayerHeight - hit.distance;
                 transform.Translate(0, diff, 0);
             }
@@ -281,9 +277,6 @@ public class CustomOVRPlayerController : MonoBehaviour
     {
         Transform root = CameraRig.trackingSpace;
         Transform centerEye = CameraRig.centerEyeAnchor;
-        Debug.Log(root.position);
-        Debug.Log("Root: " + root.rotation.eulerAngles);
-        Debug.Log("CenterEye: " + centerEye.rotation.eulerAngles);
         Debug.DrawRay(transform.position, transform.forward * 3, Color.blue);
         Debug.DrawRay(transform.position, centerEye.transform.forward * 3, Color.yellow);
 

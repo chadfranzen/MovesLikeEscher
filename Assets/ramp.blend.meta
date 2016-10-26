@@ -1,24 +1,20 @@
 fileFormatVersion: 2
-guid: 82cee10dc781b4b49926ea12df919ef1
-timeCreated: 1475947305
+guid: 892dab67b1d0ce040966dbb7f9457970
+timeCreated: 1477496223
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Camera
-    100002: Camera.target
-    100004: Model
-    100006: //RootNode
-    400000: Camera
-    400002: Camera.target
-    400004: Model
-    400006: //RootNode
-    2300000: Model
-    3300000: Model
-    4300000: Model
-    6400000: Model
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Ramp
+    6400000: //RootNode
+    7400000: Default Take
+    9500000: //RootNode
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
@@ -75,7 +71,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

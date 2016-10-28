@@ -28,6 +28,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(CharacterController))]
 public class CustomOVRPlayerController : MonoBehaviour
 {
+    public float PlayerHeight = 3f;
     /// <summary>
     /// The rate acceleration during movement.
     /// </summary>
@@ -138,17 +139,18 @@ public class CustomOVRPlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        Ray ray = new Ray(transform.position, -transform.up * 3);
+        Ray ray = new Ray(transform.position, -transform.up * 6);
         RaycastHit hit;
         Debug.DrawRay(transform.position, -transform.up * 3, Color.red);
 
         if (Physics.Raycast(ray, out hit))
         {
             Debug.DrawRay(transform.position, hit.normal * 10);
-            if (hit.normal != transform.up)
+            if (hit.normal != transform.up && currentRamp != null)
             {
                 if (hit.transform.gameObject.GetComponent("Ramp") != null)
                 {
+                    Debug.Log("Success");
                     currentRamp = hit.transform;
                 }
                 Vector3 rotateVector = currentRamp.right;
@@ -158,12 +160,30 @@ public class CustomOVRPlayerController : MonoBehaviour
                 {
                     rotateDegrees *= -1;
                 }
-                // Very hacky way of interpolating motion because I don't know how to Unity
-                Quaternion oldRotation = transform.rotation;
-                transform.RotateAround(transform.position, rotateVector, rotateDegrees);
-                Quaternion newRotation = transform.rotation;
-                transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 10f);
 
+                Vector3 oldPosition = transform.position;
+                Debug.DrawRay(transform.position, rotateVector * 3, Color.magenta);
+                Quaternion oldRotation = transform.rotation;
+                transform.Translate(0, -hit.distance, 0);
+                transform.RotateAround(transform.position, rotateVector, rotateDegrees);
+                transform.Translate(0, hit.distance, 0);
+                Quaternion newRotation = transform.rotation;
+                Vector3 newPosition = transform.position;
+
+
+
+               transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 7f);
+               transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * 7f);
+
+
+
+            }
+
+            // Adjust the player's height so it is always PlayerHeight meters above the ground.
+            if (!Mathf.Approximately(hit.distance, PlayerHeight) && hit.transform.gameObject.GetComponent("Ramp"))
+            {
+                float diff = PlayerHeight - hit.distance;
+                transform.Translate(0, diff, 0);
             }
 
         }
@@ -184,6 +204,7 @@ public class CustomOVRPlayerController : MonoBehaviour
         globalMoveDirection += MoveThrottle.y * transform.up;
         globalMoveDirection += MoveThrottle.z * transform.forward;
         globalMoveDirection *= SimulationRate * Time.deltaTime;
+     //   globalMoveDirection += 1.0 * _transform.up
 
 
         // Offset correction for uneven ground
@@ -257,9 +278,6 @@ public class CustomOVRPlayerController : MonoBehaviour
     {
         Transform root = CameraRig.trackingSpace;
         Transform centerEye = CameraRig.centerEyeAnchor;
-        Debug.Log(root.position);
-        Debug.Log("Root: " + root.rotation.eulerAngles);
-        Debug.Log("CenterEye: " + centerEye.rotation.eulerAngles);
         Debug.DrawRay(transform.position, transform.forward * 3, Color.blue);
         Debug.DrawRay(transform.position, centerEye.transform.forward * 3, Color.yellow);
 

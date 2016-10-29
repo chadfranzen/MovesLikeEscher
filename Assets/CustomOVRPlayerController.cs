@@ -85,9 +85,6 @@ public class CustomOVRPlayerController : MonoBehaviour
     private bool prevHatRight = false;
     private float SimulationRate = 60f;
 
-    Transform currentRamp = null;
-
-
     void Start()
     {
         // Add eye-depth as a camera offset from the player controller
@@ -146,23 +143,16 @@ public class CustomOVRPlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             Debug.DrawRay(transform.position, hit.normal * 10);
-            if (hit.normal != transform.up && currentRamp != null)
+            if (hit.normal != transform.up)
             {
-                if (hit.transform.gameObject.GetComponent("Ramp") != null)
-                {
-                    Debug.Log("Success");
-                    currentRamp = hit.transform;
-                }
-                Vector3 rotateVector = currentRamp.right;
-                Vector3 rampUp = currentRamp.up;
+                Debug.Log(hit.normal.ToString("F20"));
+                Debug.Log(transform.up.ToString("F20"));
+                Debug.Log("Adjusting rotation");
+                Vector3 rotateVector = Vector3.Cross(transform.up, hit.normal);
                 float rotateDegrees = Vector3.Angle(transform.up, hit.normal);
-                if (Vector3.Angle(hit.normal, rampUp) < Vector3.Angle(transform.up, rampUp))
-                {
-                    rotateDegrees *= -1;
-                }
+                Debug.DrawRay(hit.point, hit.normal * 10, Color.green);
 
                 Vector3 oldPosition = transform.position;
-                Debug.DrawRay(transform.position, rotateVector * 3, Color.magenta);
                 Quaternion oldRotation = transform.rotation;
                 transform.Translate(0, -hit.distance, 0);
                 transform.RotateAround(transform.position, rotateVector, rotateDegrees);
@@ -172,16 +162,16 @@ public class CustomOVRPlayerController : MonoBehaviour
 
 
 
-               transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 7f);
-               transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * 7f);
-
+                transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 7f);
+                transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * 7f);
 
 
             }
 
             // Adjust the player's height so it is always PlayerHeight meters above the ground.
-            if (!Mathf.Approximately(hit.distance, PlayerHeight) && hit.transform.gameObject.GetComponent("Ramp"))
+            if (!Mathf.Approximately(hit.distance, PlayerHeight))
             {
+                Debug.Log("Adjusting height");
                 float diff = PlayerHeight - hit.distance;
                 transform.Translate(0, diff, 0);
             }

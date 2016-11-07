@@ -259,6 +259,21 @@ public class CustomOVRPlayerController : MonoBehaviour
         Vector2 secondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
         float rotateAmt = secondaryAxis.x * rotateInfluence;
         transform.RotateAround(transform.position, transform.up, rotateAmt);
+
+
+        bool curHatLeft = OVRInput.Get(OVRInput.Button.PrimaryShoulder);
+
+        if (curHatLeft && !prevHatLeft)
+            transform.RotateAround(transform.position, transform.up, -RotationRatchet);
+
+        prevHatLeft = curHatLeft;
+
+        bool curHatRight = OVRInput.Get(OVRInput.Button.SecondaryShoulder);
+
+        if (curHatRight && !prevHatRight)
+            transform.RotateAround(transform.position, transform.up, RotationRatchet);
+
+        prevHatRight = curHatRight;
     }
 
     /// <summary>

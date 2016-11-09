@@ -145,9 +145,6 @@ public class CustomOVRPlayerController : MonoBehaviour
             Debug.DrawRay(transform.position, hit.normal * 10);
             if (hit.normal != transform.up)
             {
-                Debug.Log(hit.normal.ToString("F20"));
-                Debug.Log(transform.up.ToString("F20"));
-                Debug.Log("Adjusting rotation");
                 Vector3 rotateVector = Vector3.Cross(transform.up, hit.normal);
                 float rotateDegrees = Vector3.Angle(transform.up, hit.normal);
                 Debug.DrawRay(hit.point, hit.normal * 10, Color.green);
@@ -171,7 +168,6 @@ public class CustomOVRPlayerController : MonoBehaviour
             // Adjust the player's height so it is always PlayerHeight meters above the ground.
             if (!Mathf.Approximately(hit.distance, PlayerHeight))
             {
-                Debug.Log("Adjusting height");
                 float diff = PlayerHeight - hit.distance;
                 transform.Translate(0, diff, 0);
             }

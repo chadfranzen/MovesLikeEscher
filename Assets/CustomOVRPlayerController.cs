@@ -166,7 +166,7 @@ public class CustomOVRPlayerController : MonoBehaviour
             }
 
             // Adjust the player's height so it is always PlayerHeight meters above the ground.
-            if (!Mathf.Approximately(hit.distance, PlayerHeight))
+            if (!Mathf.Approximately(hit.distance, PlayerHeight) && !hit.collider.isTrigger)
             {
                 float diff = PlayerHeight - hit.distance;
                 transform.Translate(0, diff, 0);

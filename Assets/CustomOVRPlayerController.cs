@@ -190,7 +190,7 @@ public class CustomOVRPlayerController : MonoBehaviour
         globalMoveDirection += MoveThrottle.y * transform.up;
         globalMoveDirection += MoveThrottle.z * transform.forward;
         globalMoveDirection *= SimulationRate * Time.deltaTime;
-     //   globalMoveDirection += 1.0 * _transform.up
+        //   globalMoveDirection += 1.0 * _transform.up
 
 
         // Offset correction for uneven ground
@@ -208,7 +208,13 @@ public class CustomOVRPlayerController : MonoBehaviour
         */
 
         // Move contoller
-        Controller.Move(globalMoveDirection);
+        Debug.DrawRay(transform.position + globalMoveDirection, -transform.up * 2, Color.black);
+        Ray movementCheck = new Ray(transform.position + (globalMoveDirection * 10), -transform.up);
+        RaycastHit checkHit;
+        if (Physics.Raycast(movementCheck, out checkHit) && checkHit.distance < 4)
+        {
+            Controller.Move(globalMoveDirection);
+        }
 
         //Vector3 actualXZ = Vector3.Scale(Controller.transform.localPosition, new Vector3(1, 0, 1));
 

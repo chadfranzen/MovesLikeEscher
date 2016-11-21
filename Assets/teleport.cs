@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System;
 
@@ -25,7 +26,7 @@ public class teleport : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("Teleporting");
+
         if (maintainOrientation)
         {
 
@@ -33,11 +34,15 @@ public class teleport : MonoBehaviour
                 Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
                 Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1)
             {
-                Vector3 offSet = this.transform.position - other.transform.position;
-                other.transform.position = destination.transform.position + offSet.z * destination.transform.right - offSet.x * destination.transform.forward;
+                Vector3 offSet = other.transform.position - this.transform.position;
+                Debug.Log(offSet);
 
                 Quaternion rOff = Quaternion.Inverse(this.transform.rotation) * other.transform.rotation;
                 other.transform.rotation = destination.transform.rotation * rOff;
+
+                other.transform.position = destination.transform.position;
+                //other.transform.Translate(offSet);
+                other.transform.Translate(new Vector3(offSet.x, 0, offSet.z), destination.transform);
 
             }
         }

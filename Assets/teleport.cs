@@ -34,15 +34,21 @@ public class teleport : MonoBehaviour
                 Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
                 Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1)
             {
-                Vector3 offSet = other.transform.position - this.transform.position;
-                Debug.Log(offSet);
+                Transform oldParent = other.transform.parent;
+                other.transform.parent = this.transform;
+                Vector3 offSet = other.transform.localPosition;
+                //Vector3 offSet = this.transform.InverseTransformPoint(other.transform.position);
 
                 Quaternion rOff = Quaternion.Inverse(this.transform.rotation) * other.transform.rotation;
                 other.transform.rotation = destination.transform.rotation * rOff;
 
-                other.transform.position = destination.transform.position;
+                other.transform.parent = destination.transform;
+                other.transform.localPosition = offSet;
+                other.transform.parent = oldParent;
+                //other.transform.position = destination.transform.position;
                 //other.transform.Translate(offSet);
-                other.transform.Translate(new Vector3(offSet.x, 0, offSet.z), destination.transform);
+
+                //other.transform.Translate(new Vector3(offSet.x, 0, offSet.z), destination.transform);
 
             }
         }

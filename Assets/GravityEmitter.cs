@@ -3,7 +3,6 @@ using System.Collections;
 
 public class GravityEmitter : MonoBehaviour {
     public float mass;
-    public GameObject me;
     public Color color;
     bool debug;
 
@@ -24,8 +23,8 @@ public class GravityEmitter : MonoBehaviour {
     {
         if(other.GetComponent<Rigidbody>())
         {
-            float dist = Vector3.Distance(other.transform.position, me.transform.position);
-            Vector3 dir = (me.transform.position - other.transform.position) / dist;
+            float dist = Vector3.Distance(other.transform.position, transform.position);
+            Vector3 dir = (transform.position - other.transform.position) / dist;
             other.GetComponent<Rigidbody>().AddForce(Vector3.Scale(mask, dir * mass * 100 * Time.deltaTime / (dist * dist)));
         }
     }

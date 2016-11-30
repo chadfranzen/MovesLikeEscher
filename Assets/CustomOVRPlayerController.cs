@@ -69,6 +69,9 @@ public class CustomOVRPlayerController : MonoBehaviour
     /// </summary>
     public bool HmdRotatesY = false;
 
+    public GameObject BulletPrefab;
+    public float bulletVelocity = 10.0f;
+
     protected CharacterController Controller = null;
     protected OVRCameraRig CameraRig = null;
 
@@ -220,6 +223,19 @@ public class CustomOVRPlayerController : MonoBehaviour
 
         //if (predictedXZ != actualXZ)
             //MoveThrottle += (actualXZ - predictedXZ) / (SimulationRate * Time.deltaTime);
+
+
+        /**
+         * Shooting logic
+         */
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            GameObject bullet = Instantiate(BulletPrefab);
+            bullet.transform.position = transform.position;
+            Vector3 lookDirection = CameraRig.centerEyeAnchor.transform.forward;
+            bullet.transform.Translate(lookDirection * 3);
+            bullet.GetComponent<Rigidbody>().velocity = lookDirection * bulletVelocity;
+        }
     }
 
     public virtual void UpdateMovement()

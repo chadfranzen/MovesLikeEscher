@@ -32,5 +32,6 @@ public class GravityEmitter : MonoBehaviour, PhysicsButtonTarget {
     public void activate()
     {
         mask = new Vector3(-mask.x, -mask.y, -mask.z);
+        mass = 5500;
     }
 }

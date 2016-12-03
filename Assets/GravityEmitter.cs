@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GravityEmitter : MonoBehaviour, PhysicsButtonTarget {
     public float mass;
-    public Color color;
+    public Color flippedColor;
     bool debug;
 
     // Allows for gravity to be exerted only in one direction, e.g. for a the floor, only in the Y-direction.
@@ -25,13 +25,16 @@ public class GravityEmitter : MonoBehaviour, PhysicsButtonTarget {
         {
             float dist = Vector3.Distance(other.transform.position, transform.position);
             Vector3 dir = (transform.position - other.transform.position) / dist;
-            other.GetComponent<Rigidbody>().AddForce(Vector3.Scale(mask, dir * mass * 100 * Time.deltaTime / (dist * dist)));
+            other.GetComponent<Rigidbody>().AddForce(Vector3.Scale(mask, dir * mass * 100 * Time.deltaTime / (dist * dist * 0.3f)));
         }
     }
 
     public void activate()
     {
         mask = new Vector3(-mask.x, -mask.y, -mask.z);
-        mass = 5500;
+        mass = 2000;
+        GetComponent<Light>().color = flippedColor;
+        GetComponent<Light>().intensity = 0.95f;
+        GetComponent<Renderer>().material.color = flippedColor;
     }
 }

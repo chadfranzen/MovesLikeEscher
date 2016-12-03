@@ -39,7 +39,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010859874254}
-  - 114: {fileID: 114000013723439388}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -150,7 +149,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 55296d1b6ee54e14e8eb4648d4b448ee, type: 2}
+  - {fileID: 2100000, guid: ba396a4f3c3c21c4abc6872207df51ec, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -190,7 +189,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
+  m_Convex: 1
   m_Mesh: {fileID: 0}
 --- !u!64 &64000011552080374
 MeshCollider:
@@ -202,7 +201,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
+  m_Convex: 1
   m_Mesh: {fileID: 0}
 --- !u!114 &114000010857830220
 MonoBehaviour:
@@ -18414,16 +18413,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityType: 0
---- !u!114 &114000013723439388
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010159974886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c21d8f9067481c448975f789cba9d93b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coolDownTime: 2
-  target: {fileID: 0}

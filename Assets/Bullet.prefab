@@ -24,6 +24,7 @@ GameObject:
   - 23: {fileID: 23000013362071290}
   - 54: {fileID: 54000013759019644}
   - 114: {fileID: 114000012918604384}
+  - 122: {fileID: 122000014120118700}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -57,7 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ba4c3182934e8a947a86555b5884b50b, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -94,7 +95,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &114000012918604384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -106,6 +107,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948e7ed214d5ff84e8398e66e0b550bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifetime: 10
+--- !u!122 &122000014120118700
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012866220350}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4282861531
+  m_Size: 0.3
 --- !u!135 &135000012931942560
 SphereCollider:
   m_ObjectHideFlags: 1

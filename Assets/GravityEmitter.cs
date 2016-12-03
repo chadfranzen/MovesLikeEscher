@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GravityEmitter : MonoBehaviour {
+public class GravityEmitter : MonoBehaviour, PhysicsButtonTarget {
     public float mass;
     public Color color;
     bool debug;
@@ -27,5 +27,10 @@ public class GravityEmitter : MonoBehaviour {
             Vector3 dir = (transform.position - other.transform.position) / dist;
             other.GetComponent<Rigidbody>().AddForce(Vector3.Scale(mask, dir * mass * 100 * Time.deltaTime / (dist * dist)));
         }
+    }
+
+    public void activate()
+    {
+        mask = new Vector3(-mask.x, -mask.y, -mask.z);
     }
 }

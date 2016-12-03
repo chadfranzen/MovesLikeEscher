@@ -49,7 +49,6 @@ public class MovePath : MonoBehaviour, PhysicsButtonTarget {
             }
         } else if (!hitPointTwo)
         {
-            Debug.Log("Point two");
             t += Time.deltaTime / (travelTime / 3);
             transform.position = Vector3.Lerp(points[0], points[1], t);
             if (Mathf.Approximately(0f, Vector3.Distance(transform.position, points[1])))

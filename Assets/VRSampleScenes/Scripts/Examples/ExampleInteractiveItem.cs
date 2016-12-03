@@ -14,6 +14,8 @@ namespace VRStandardAssets.Examples
         [SerializeField] private VRInteractiveItem m_InteractiveItem;
         [SerializeField] private Renderer m_Renderer;
 
+        public CustomOVRPlayerController player;
+
 
         private void Awake ()
         {
@@ -42,7 +44,6 @@ namespace VRStandardAssets.Examples
         //Handle the Over event
         private void HandleOver()
         {
-            Debug.Log("Show over state");
             m_Renderer.material = m_OverMaterial;
         }
 
@@ -50,7 +51,6 @@ namespace VRStandardAssets.Examples
         //Handle the Out event
         private void HandleOut()
         {
-            Debug.Log("Show out state");
             m_Renderer.material = m_NormalMaterial;
         }
 
@@ -58,15 +58,15 @@ namespace VRStandardAssets.Examples
         //Handle the Click event
         private void HandleClick()
         {
-            Debug.Log("Show click state");
             m_Renderer.material = m_ClickedMaterial;
+            player.giveGun();
+            Destroy(gameObject);
         }
 
 
         //Handle the DoubleClick event
         private void HandleDoubleClick()
         {
-            Debug.Log("Show double click");
             m_Renderer.material = m_DoubleClickedMaterial;
         }
     }

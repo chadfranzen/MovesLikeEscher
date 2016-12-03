@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TutorialPath : MonoBehaviour, PhysicsButtonTarget {
+public class MovingObject : MonoBehaviour, PhysicsButtonTarget {
     bool active = false;
 
     public Transform target;
@@ -31,6 +31,7 @@ public class TutorialPath : MonoBehaviour, PhysicsButtonTarget {
 
     public void activate()
     {
+        Debug.Log("Activated");
         active = true;
     }
 }

@@ -69,6 +69,11 @@ public class CustomOVRPlayerController : MonoBehaviour
     /// </summary>
     public bool HmdRotatesY = false;
 
+    public GameObject BulletPrefab;
+    public float bulletVelocity = 10.0f;
+
+    public float rotationSpeed = 9.0f;
+
     protected CharacterController Controller = null;
     protected OVRCameraRig CameraRig = null;
 
@@ -84,6 +89,8 @@ public class CustomOVRPlayerController : MonoBehaviour
     private bool prevHatLeft = false;
     private bool prevHatRight = false;
     private float SimulationRate = 60f;
+
+    private bool canShoot = false;
 
     void Start()
     {
@@ -159,8 +166,8 @@ public class CustomOVRPlayerController : MonoBehaviour
 
 
 
-                transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * 7f);
-                transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * 7f);
+                transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * rotationSpeed);
+                transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * rotationSpeed);
 
 
             }
@@ -220,6 +227,19 @@ public class CustomOVRPlayerController : MonoBehaviour
 
         //if (predictedXZ != actualXZ)
             //MoveThrottle += (actualXZ - predictedXZ) / (SimulationRate * Time.deltaTime);
+
+
+        /**
+         * Shooting logic
+         */
+        if (canShoot && OVRInput.GetDown(OVRInput.Button.One))
+        {
+            GameObject bullet = Instantiate(BulletPrefab);
+            bullet.transform.position = transform.position;
+            Vector3 lookDirection = CameraRig.centerEyeAnchor.transform.forward;
+            bullet.transform.Translate(lookDirection * 3);
+            bullet.GetComponent<Rigidbody>().velocity = lookDirection * bulletVelocity;
+        }
     }
 
     public virtual void UpdateMovement()
@@ -407,6 +427,11 @@ public class CustomOVRPlayerController : MonoBehaviour
             euler.y = InitialYRotation;
             transform.rotation = Quaternion.Euler(euler);
         }
+    }
+
+    public void giveGun()
+    {
+        canShoot = true;
     }
 }
 

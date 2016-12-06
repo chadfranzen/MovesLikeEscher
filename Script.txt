@@ -22,3 +22,7 @@ addition, they must keep a keen eye on the visible parts of the maze, as they ma
 4: Gravity and you- a primer
 Here, we introduce a simple pellet gun. Perfect for hitting those buttons to open the exit! If only the sphere in the center didn't
 suck them into the abyss. Perhaps we can find other buttons to hit, some way to turn the sphere to our advantage.
+
+One technical challenge we tackled for this project was modifying Oculus player controller to move in local, rather than global, space. We also developed ways to seamlessly teleport the player to create the illusion of impossible spaces.
+
+We’ve tuned the experience to reduce simulator sickness. Ramps are segmented like this to minimize the duration of rotational flows. We introduce concepts gradually so the player remains comfortable.

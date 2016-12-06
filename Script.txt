@@ -1,0 +1,24 @@
+[this is super preliminary. It would be easier for me if we could make a 3 minute video, and then have me create the script based on that.]
+
+Welcome to "Moves Like Escher", a game where the laws of space warp, and you can never be sure what will be around the next corner.
+This video will serve as a short appetizer to the puzzles you shall see in the full game.
+
+1: Baby's first non-euclidean space
+The first level is designed to get the player to remove their preconceived notions of space right off the bat. The way out is clearly
+marked, and the path is clear- walk up the wall. Simplicity, in and of itself.
+
+[Transition (teleporting):]
+As we enter this short hallway, identical to the ones that end each level, we shall find ourselves somwhere entirely different. Going
+back, we find that things are not as we left them. The way back is closed. Only one way to go- forward.
+
+2: The intertwining maze
+The exit is so close, yet so far away. The player must traverse their first real puzzle- a maze which folds in on itself. They
+must use the newly introduced convex ramps to travel around the sides and undersides of the platforms to make their way across. In
+addition, they must keep a keen eye on the visible parts of the maze, as they may find themselves traversing that section in the future.
+
+3: Impossible doorways
+?
+
+4: Gravity and you- a primer
+Here, we introduce a simple pellet gun. Perfect for hitting those buttons to open the exit! If only the sphere in the center didn't
+suck them into the abyss. Perhaps we can find other buttons to hit, some way to turn the sphere to our advantage.

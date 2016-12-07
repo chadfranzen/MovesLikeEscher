@@ -17,10 +17,13 @@ must use the newly introduced convex ramps to travel around the sides and unders
 addition, they must keep a keen eye on the visible parts of the maze, as they may find themselves traversing that section in the future.
 
 3: Impossible doorways
-?
+You now have a pellet gun, which you can use to push buttons and open doors. However, there's something fishy about these 
+doors -- they don't go anywhere! Instead, you can go in and end up at a different place entirely. It seems that the buttons 
+alter the fabric of space and time to link different passageways together, so maybe we can experiment with the combinations 
+of doors to make our way to the exit.
 
 4: Gravity and you- a primer
-Here, we introduce a simple pellet gun. Perfect for hitting those buttons to open the exit! If only the sphere in the center didn't
+You have your pellet gun, and there's a button right in front of you. Simple enough! If only the sphere in the center didn't
 suck them into the abyss. Perhaps we can find other buttons to hit, some way to turn the sphere to our advantage.
 
 One technical challenge we tackled for this project was modifying Oculus player controller to move in local, rather than global, space. We also developed ways to seamlessly teleport the player to create the illusion of impossible spaces.

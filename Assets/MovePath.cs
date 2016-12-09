@@ -42,7 +42,11 @@ public class MovePath : MonoBehaviour, PhysicsButtonTarget {
         {
             t += Time.deltaTime / (travelTime / 3);
             transform.position = Vector3.Lerp(startPosition, points[0], t);
-            if (Mathf.Approximately(0f, Vector3.Distance(transform.position, points[0])))
+            Debug.Log(t);
+            Debug.Log(transform.position);
+            Debug.Log(points[0]);
+            Debug.Log(Vector3.Distance(transform.position, points[0]));
+            if (Vector3.Distance(transform.position, points[0]) < 0.00001f)
             {
                 hitPointOne = true;
                 t = 0;
@@ -51,7 +55,7 @@ public class MovePath : MonoBehaviour, PhysicsButtonTarget {
         {
             t += Time.deltaTime / (travelTime / 3);
             transform.position = Vector3.Lerp(points[0], points[1], t);
-            if (Mathf.Approximately(0f, Vector3.Distance(transform.position, points[1])))
+            if (Vector3.Distance(transform.position, points[1]) < 0.00001f)
             {
                 hitPointTwo = true;
                 t = 0;
@@ -60,7 +64,7 @@ public class MovePath : MonoBehaviour, PhysicsButtonTarget {
         {
             t += Time.deltaTime / (travelTime / 3);
             transform.position = Vector3.Lerp(points[1], endPosition, t);
-            if (Mathf.Approximately(0f, Vector3.Distance(transform.position, endPosition)))
+            if (Vector3.Distance(transform.position, endPosition) < 0.00001f)
             {
                 active = false;
                 hitPointOne = false;

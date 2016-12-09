@@ -86,7 +86,7 @@ namespace VRStandardAssets.Utils
                 m_LastInteractible = interactible;
 
                 // Something was hit, set at the hit position.
-                if (m_Reticle)
+                if (m_Reticle && hit.collider.gameObject.tag != "Teleporter")
                     m_Reticle.SetPosition(hit);
 
                 if (OnRaycasthit != null)

@@ -23,9 +23,9 @@ public class GravityEmitter : MonoBehaviour, PhysicsButtonTarget {
     {
         if(other.GetComponent<Rigidbody>())
         {
-            float dist = Vector3.Distance(other.transform.position, transform.position);
-            Vector3 dir = (transform.position - other.transform.position) / dist;
-            other.GetComponent<Rigidbody>().AddForce(Vector3.Scale(mask, dir * mass * 100 * Time.deltaTime / (dist * dist * 0.3f)));
+            float dist = Vector3.Scale(mask, transform.GetComponent<Renderer>().bounds.center - other.transform.position).magnitude;
+            Vector3 dir = Vector3.Scale(mask, (transform.GetComponent<Renderer>().bounds.center - other.transform.position)) / dist;
+            other.GetComponent<Rigidbody>().AddForce(dir * mass * 300 * Time.deltaTime / (dist * dist));
         }
     }
 

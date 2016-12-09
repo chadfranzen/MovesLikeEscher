@@ -7,6 +7,8 @@ public class teleport : MonoBehaviour
 {
     public GameObject destination;
     public bool maintainOrientation = true;
+    public GameObject setVisible;
+    public GameObject setInvisible;
 
     // Use this for initialization
     void Start()
@@ -26,7 +28,10 @@ public class teleport : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-
+        if (setVisible != null)
+        {
+            setVisible.SetActive(true);
+        }
         if (maintainOrientation)
         {
 
@@ -58,6 +63,10 @@ public class teleport : MonoBehaviour
 
             other.transform.eulerAngles = destination.transform.rotation.eulerAngles;
             other.transform.Rotate(0, 180, 0);
+        }
+        if (setInvisible != null)
+        {
+            setInvisible.SetActive(false);
         }
     }
 

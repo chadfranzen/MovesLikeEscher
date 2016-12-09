@@ -21,6 +21,7 @@ public class GravityEmitter : MonoBehaviour, PhysicsButtonTarget {
 
     void OnTriggerStay(Collider other)
     {
+        print("OnTriggerStay called");
         if(other.GetComponent<Rigidbody>())
         {
             float dist = Vector3.Scale(mask, transform.GetComponent<Renderer>().bounds.center - other.transform.position).magnitude;

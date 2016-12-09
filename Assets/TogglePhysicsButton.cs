@@ -38,14 +38,14 @@ public class TogglePhysicsButton : MonoBehaviour
         }
         if (!inCooldown)
         {
-            target.GetComponent<PhysicsButtonTarget>().activate();
+            //target.GetComponent<PhysicsButtonTarget>().activate();
             if (state)
             {
                 GetComponent<Renderer>().material.color = newColor;
             }
             else 
             {
-                    GetComponent<Renderer>().material.color = originalColor;
+                GetComponent<Renderer>().material.color = originalColor;
             }
             timeHit = Time.fixedTime;
             inCooldown = true;

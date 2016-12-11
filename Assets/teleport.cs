@@ -9,6 +9,8 @@ public class teleport : MonoBehaviour
     public bool maintainOrientation = true;
     public GameObject setVisible;
     public GameObject setInvisible;
+    public float cooldown;
+    private float time = -1;
 
     // Use this for initialization
     void Start()
@@ -28,46 +30,51 @@ public class teleport : MonoBehaviour
     }
     void OnTriggerStay(Collider other)
     {
-        if (setVisible != null)
+        if (cooldown <= 0 || Time.fixedTime - time > cooldown)
         {
-            setVisible.SetActive(true);
-        }
-        if (maintainOrientation)
-        {
-
-            if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
-                Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
-                Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1)
+            Debug.Log("Teleporting...");
+            if (setVisible != null)
             {
-                Transform oldParent = other.transform.parent;
-                other.transform.parent = this.transform;
-                Vector3 offSet = other.transform.localPosition;
-                //Vector3 offSet = this.transform.InverseTransformPoint(other.transform.position);
+                setVisible.SetActive(true);
+            }
+            if (maintainOrientation)
+            {
 
-                Quaternion rOff = Quaternion.Inverse(this.transform.rotation) * other.transform.rotation;
-                other.transform.rotation = destination.transform.rotation * rOff;
+                if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
+                    Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
+                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1)
+                {
+                    Transform oldParent = other.transform.parent;
+                    other.transform.parent = this.transform;
+                    Vector3 offSet = other.transform.localPosition;
+                    //Vector3 offSet = this.transform.InverseTransformPoint(other.transform.position);
 
-                other.transform.parent = destination.transform;
-                other.transform.localPosition = offSet;
-                other.transform.parent = oldParent;
-                //other.transform.position = destination.transform.position;
-                //other.transform.Translate(offSet);
+                    Quaternion rOff = Quaternion.Inverse(this.transform.rotation) * other.transform.rotation;
+                    other.transform.rotation = destination.transform.rotation * rOff;
 
-                //other.transform.Translate(new Vector3(offSet.x, 0, offSet.z), destination.transform);
+                    other.transform.parent = destination.transform;
+                    other.transform.localPosition = offSet;
+                    other.transform.parent = oldParent;
+                    //other.transform.position = destination.transform.position;
+                    //other.transform.Translate(offSet);
 
+                    //other.transform.Translate(new Vector3(offSet.x, 0, offSet.z), destination.transform);
+
+                }
+            }
+            else
+            {
+                other.transform.position = destination.transform.position + -1.5f * destination.transform.forward;
+
+                other.transform.eulerAngles = destination.transform.rotation.eulerAngles;
+                other.transform.Rotate(0, 180, 0);
+            }
+            if (setInvisible != null)
+            {
+                setInvisible.SetActive(false);
             }
         }
-        else
-        {
-            other.transform.position = destination.transform.position + -1.5f * destination.transform.forward;
-
-            other.transform.eulerAngles = destination.transform.rotation.eulerAngles;
-            other.transform.Rotate(0, 180, 0);
-        }
-        if (setInvisible != null)
-        {
-            setInvisible.SetActive(false);
-        }
+        time = Time.fixedTime;
     }
 
     void OnTriggerExit(Collider other)

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TogglePhysicsButton : MonoBehaviour
 {
-    public GameObject target;
+    public GameObject target, tgtlight;
 
     public Color originalColor, newColor;
 
@@ -12,7 +12,8 @@ public class TogglePhysicsButton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+        GetComponent<Renderer>().material.color = originalColor;
+        tgtlight.GetComponent<Light>().color = originalColor;
     }
 
     // Update is called once per frame
@@ -31,10 +32,12 @@ public class TogglePhysicsButton : MonoBehaviour
         if (!state)
         {
             GetComponent<Renderer>().material.color = newColor;
+            tgtlight.GetComponent<Light>().color = newColor;
         }
         else 
         {
             GetComponent<Renderer>().material.color = originalColor;
+            tgtlight.GetComponent<Light>().color = originalColor;
         }
         state = !state;
     }

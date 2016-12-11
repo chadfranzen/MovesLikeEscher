@@ -67,6 +67,7 @@ public class teleport : MonoBehaviour
                     other.transform.parent = destination.transform;
                     other.transform.localPosition = offSet;
                     other.transform.parent = oldParent;
+                    other.transform.localScale = new Vector3(1, 1, 1);
                     //other.transform.position = destination.transform.position;
                     //other.transform.Translate(offSet);
 

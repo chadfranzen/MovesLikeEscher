@@ -74,9 +74,9 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     //bullet.transform.Translate(direction * 3);
                 }*/
 
-                if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 100 &&
-                    Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 100 &&
-                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 100 )
+                if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
+                    Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
+                    Math.Abs(Math.Abs(this.transform.forward.z) - Math.Abs(other.transform.forward.z))<= 1)
                 {
                     Debug.Log("Teleporting from " + name + " to " + destination.name + "...");
                     Transform oldParent = other.transform.parent;

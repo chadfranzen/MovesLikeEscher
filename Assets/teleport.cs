@@ -10,6 +10,8 @@ public class teleport : MonoBehaviour
     public GameObject setVisible;
     public GameObject setInvisible;
     public float cooldown;
+    public GameObject BulletPrefab;
+
     private float time = -1;
 	public bool newMode = true;
     // Use this for initialization
@@ -49,10 +51,23 @@ public class teleport : MonoBehaviour
 			}
 			else if (maintainOrientation)
             {
+                if(other.tag == "Bullet" && !other.GetComponent<BulletScript>().teleported)
+                {
+                    Debug.Log("Found bullet!");
+                    Vector3 direction = other.transform.forward;
+                    Vector3 pos = other.transform.position;
+                    float vel = other.GetComponent<BulletScript>().speed;
+                    GameObject bullet = Instantiate(BulletPrefab);
+                    bullet.GetComponent<BulletScript>().teleported = true;
+                    bullet.transform.position = pos;
+                    bullet.GetComponent<Rigidbody>().velocity = direction * vel;
+                    bullet.transform.forward = direction;
+                }
 
                 if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
                     Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
-                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1)
+                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1 
+                    || (other.tag == "Bullet" && !other.GetComponent<BulletScript>().teleported))
                 {
                     Transform oldParent = other.transform.parent;
                     other.transform.parent = this.transform;
@@ -67,7 +82,10 @@ public class teleport : MonoBehaviour
                     other.transform.parent = destination.transform;
                     other.transform.localPosition = offSet;
                     other.transform.parent = oldParent;
-                    other.transform.localScale = new Vector3(1, 1, 1);
+                    if (other.tag != "Bullet")
+                    {
+                        other.transform.localScale = new Vector3(1, 1, 1);
+                    }
                     //other.transform.position = destination.transform.position;
                     //other.transform.Translate(offSet);
 

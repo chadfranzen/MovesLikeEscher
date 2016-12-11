@@ -3,9 +3,9 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class teleport : MonoBehaviour
+public class teleport : MonoBehaviour, PhysicsButtonTarget
 {
-    public GameObject destination;
+    public GameObject destination, otherDest;
     public bool maintainOrientation = true;
     public GameObject setVisible;
     public GameObject setInvisible;
@@ -111,5 +111,12 @@ public class teleport : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         Debug.Log("Teleporter exited...");
+    }
+
+    void activate()
+    {
+        GameObject temp = destination;
+        destination = otherDest;
+        otherDest = temp;
     }
 }

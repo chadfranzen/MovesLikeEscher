@@ -11,7 +11,7 @@ public class teleport : MonoBehaviour
     public GameObject setInvisible;
     public float cooldown;
     private float time = -1;
-
+	public bool newMode = true;
     // Use this for initialization
     void Start()
     {
@@ -37,7 +37,17 @@ public class teleport : MonoBehaviour
             {
                 setVisible.SetActive(true);
             }
-            if (maintainOrientation)
+			if (newMode)
+            {
+                var player = other.transform;
+                var from = transform;
+                var to = destination.transform;
+
+
+				player.position += to.position-from.position;
+                player.rotation *= to.rotation*Quaternion.Inverse(from.rotation);
+			}
+			else if (maintainOrientation)
             {
 
                 if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
@@ -46,6 +56,8 @@ public class teleport : MonoBehaviour
                 {
                     Transform oldParent = other.transform.parent;
                     other.transform.parent = this.transform;
+							
+					
                     Vector3 offSet = other.transform.localPosition;
                     //Vector3 offSet = this.transform.InverseTransformPoint(other.transform.position);
 

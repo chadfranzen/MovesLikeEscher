@@ -25,7 +25,7 @@ GameObject:
   - 114: {fileID: 114000013701309192}
   - 64: {fileID: 64000014079249432}
   m_Layer: 0
-  m_Name: Arch
+  m_Name: Arch 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

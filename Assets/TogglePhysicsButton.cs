@@ -3,31 +3,23 @@ using System.Collections;
 
 public class TogglePhysicsButton : MonoBehaviour
 {
-    public float coolDownTime;
-    public GameObject target;
+    public GameObject target, tgtlight;
 
     public Color originalColor, newColor;
 
-    bool inCooldown = false, state = false;
+    bool state = false;
 
-    private float timeHit = 0;
     // Use this for initialization
     void Start()
     {
-        
+        GetComponent<Renderer>().material.color = originalColor;
+        tgtlight.GetComponent<Light>().color = originalColor;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(inCooldown || coolDownTime == -1)
-        {
-            return;
-        }
-        if(Time.fixedTime - timeHit > coolDownTime)
-        {
-            inCooldown = false;
-        }
+
     }
 
     void OnCollisionEnter(Collision col)
@@ -36,19 +28,17 @@ public class TogglePhysicsButton : MonoBehaviour
         {
             return;
         }
-        if (!inCooldown)
+        target.GetComponent<PhysicsButtonTarget>().activate();
+        if (!state)
         {
-            //target.GetComponent<PhysicsButtonTarget>().activate();
-            if (state)
-            {
-                GetComponent<Renderer>().material.color = newColor;
-            }
-            else 
-            {
-                GetComponent<Renderer>().material.color = originalColor;
-            }
-            timeHit = Time.fixedTime;
-            inCooldown = true;
+            GetComponent<Renderer>().material.color = newColor;
+            tgtlight.GetComponent<Light>().color = newColor;
         }
+        else 
+        {
+            GetComponent<Renderer>().material.color = originalColor;
+            tgtlight.GetComponent<Light>().color = originalColor;
+        }
+        state = !state;
     }
 }

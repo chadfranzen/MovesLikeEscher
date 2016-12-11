@@ -45,6 +45,7 @@ public class MoveToLevel : MonoBehaviour {
             one.SetActive(false);
             four.SetActive(true);
             player.transform.position = new Vector3(-0.55f, -94.63f,-121.4f);
+            //player.transform.position = new Vector3(-0f, -67.9f, 17f);
             player.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
     }

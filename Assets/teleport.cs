@@ -35,7 +35,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Teleporter entered...");
+        Debug.Log("Teleporter " + name + " entered...");
     }
     void OnTriggerStay(Collider other)
     {
@@ -78,7 +78,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 100 &&
                     Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 100 )
                 {
-                    Debug.Log("Teleporting...");
+                    Debug.Log("Teleporting from " + name + " to " + destination.name + "...");
                     Transform oldParent = other.transform.parent;
                     other.transform.parent = this.transform;
 
@@ -105,6 +105,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     foreach (GameObject bullet in bullets)
                     {
                         bullet.transform.parent = null;
+                        bullet.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                     }
 
                     //other.transform.position = destination.transform.position;
@@ -126,12 +127,12 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                 setInvisible.SetActive(false);
             }
         }
-        time = Time.fixedTime;
+        destination.GetComponent<teleport>().time = Time.fixedTime;
     }
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Teleporter exited...");
+        Debug.Log("Teleporter " + name + " exited...");
     }
 
     public void activate()
@@ -139,13 +140,28 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         GameObject temp = destination;
         destination = otherDest;
         otherDest = temp;
-        toggle();
-        destination.GetComponent<teleport>().toggle();
-    }
-    public void toggle()
-    {
-        GetComponent<Light>().color = colors[(++i) % 2];
-        GetComponent<Light>().intensity = intensities[i % 2];
+        setColor(colors[(++i) % 2], intensities[i % 2]);
         if (i == 2) i = 0;
+    }
+    public void setDest(GameObject d)
+    {
+        GameObject temp = destination;
+        destination = d;
+        otherDest = temp;
+        Debug.Log("Set destination to " + d.name);
+        d.GetComponent<teleport>().destination = gameObject;
+        Debug.Log("Set other's destination to " + gameObject.name);
+    }
+    public void setColor(Color col, float intensity)
+    {
+        GetComponent<Light>().color = col;
+        GetComponent<Light>().intensity = intensity;
+        destination.GetComponent<Light>().color = col;
+        destination.GetComponent<Light>().intensity = intensity;
+        if (otherDest)
+        {
+            otherDest.GetComponent<Light>().color = Color.white;
+            otherDest.GetComponent<Light>().intensity = .3f;
+        }
     }
 }

@@ -216,9 +216,9 @@ public class CustomOVRPlayerController : MonoBehaviour
 
         // Move contoller
         Debug.DrawRay(transform.position + globalMoveDirection, -transform.up * 2, Color.black);
-        Ray movementCheck = new Ray(transform.position + (globalMoveDirection * 5), -transform.up);
+        Ray movementCheck = new Ray(transform.position + (globalMoveDirection * 10), -transform.up);
         RaycastHit checkHit;
-        if (Physics.Raycast(movementCheck, out checkHit) && checkHit.distance < (PlayerHeight + 0.75) && checkHit.distance > (PlayerHeight - 1.25))
+        if (Physics.Raycast(movementCheck, out checkHit) && checkHit.distance < (PlayerHeight + 1))
         {
             Controller.Move(globalMoveDirection);
         }

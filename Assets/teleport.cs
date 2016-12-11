@@ -6,18 +6,22 @@ using System;
 public class teleport : MonoBehaviour, PhysicsButtonTarget
 {
     public GameObject destination, otherDest;
+    public float [] intensities = new float[2];
+    public Color[] colors = new Color[2];
     public bool maintainOrientation = true;
     public GameObject setVisible;
     public GameObject setInvisible;
     public float cooldown;
     public GameObject BulletPrefab;
+    private int i;
 
     private float time = -1;
 	public bool newMode = true;
     // Use this for initialization
     void Start()
     {
-
+        i = 0;
+        GetComponent<Light>().color = colors[i];
     }
 
     // Update is called once per frame
@@ -38,7 +42,6 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         }
         if (cooldown <= 0 || Time.fixedTime - time > cooldown)
         {
-            Debug.Log("Teleporting...");
             if (setVisible != null)
             {
                 setVisible.SetActive(true);
@@ -68,10 +71,11 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     //bullet.transform.Translate(direction * 3);
                 }*/
 
-                if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
-                    Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
-                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1 )
+                if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 100 &&
+                    Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 100 &&
+                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 100 )
                 {
+                    Debug.Log("Teleporting...");
                     Transform oldParent = other.transform.parent;
                     other.transform.parent = this.transform;
 
@@ -132,5 +136,13 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         GameObject temp = destination;
         destination = otherDest;
         otherDest = temp;
+        toggle();
+        destination.GetComponent<teleport>().toggle();
+    }
+    public void toggle()
+    {
+        GetComponent<Light>().color = colors[(++i) % 2];
+        GetComponent<Light>().intensity = intensities[i % 2];
+        if (i == 2) i = 0;
     }
 }

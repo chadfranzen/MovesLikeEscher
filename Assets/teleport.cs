@@ -51,18 +51,18 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 			}
 			else if (maintainOrientation)
             {
-                if(other.tag == "Bullet" && !other.GetComponent<BulletScript>().teleported)
+                /*if(other.tag == "Bullet" && !other.GetComponent<BulletScript>().teleported)
                 {
                     Debug.Log("Found bullet!");
-                    Vector3 direction = other.transform.forward;
                     Vector3 pos = other.transform.position;
                     float vel = other.GetComponent<BulletScript>().speed;
-                    GameObject bullet = Instantiate(BulletPrefab);
+                    GameObject bullet = Instantiate(other.transform.gameObject);
                     bullet.GetComponent<BulletScript>().teleported = true;
-                    bullet.transform.position = pos;
-                    bullet.GetComponent<Rigidbody>().velocity = direction * vel;
-                    bullet.transform.forward = direction;
-                }
+                    //bullet.transform.position = pos;
+
+                    bullet.GetComponent<Rigidbody>().velocity = other.GetComponent<Rigidbody>().velocity;
+                    //bullet.transform.Translate(direction * 3);
+                }*/
 
                 if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
                     Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
@@ -86,6 +86,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     {
                         other.transform.localScale = new Vector3(1, 1, 1);
                     }
+
                     //other.transform.position = destination.transform.position;
                     //other.transform.Translate(offSet);
 

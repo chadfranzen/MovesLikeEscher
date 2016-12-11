@@ -32,6 +32,10 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
     }
     void OnTriggerStay(Collider other)
     {
+        if (other.tag == "Bullet")
+        {
+            return;
+        }
         if (cooldown <= 0 || Time.fixedTime - time > cooldown)
         {
             Debug.Log("Teleporting...");
@@ -66,13 +70,18 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 
                 if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
                     Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
-                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1 
-                    || (other.tag == "Bullet" && !other.GetComponent<BulletScript>().teleported))
+                    Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1 )
                 {
                     Transform oldParent = other.transform.parent;
                     other.transform.parent = this.transform;
-							
-					
+
+                    GameObject[] bullets = GameObject.FindGameObjectsWithTag("Bullet");
+                    foreach (GameObject bullet in bullets)
+                    {
+                        bullet.transform.parent = other.transform;
+                    }
+
+
                     Vector3 offSet = other.transform.localPosition;
                     //Vector3 offSet = this.transform.InverseTransformPoint(other.transform.position);
 
@@ -85,6 +94,10 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     if (other.tag != "Bullet")
                     {
                         other.transform.localScale = new Vector3(1, 1, 1);
+                    }
+                    foreach (GameObject bullet in bullets)
+                    {
+                        bullet.transform.parent = null;
                     }
 
                     //other.transform.position = destination.transform.position;

@@ -21,7 +21,10 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
     void Start()
     {
         i = 0;
-        GetComponent<Light>().color = colors[i];
+        if (GetComponent<Light>() != null)
+        {
+            GetComponent<Light>().color = colors[i];
+        }
     }
 
     // Update is called once per frame

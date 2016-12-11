@@ -113,7 +113,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         Debug.Log("Teleporter exited...");
     }
 
-    void activate()
+    public void activate()
     {
         GameObject temp = destination;
         destination = otherDest;

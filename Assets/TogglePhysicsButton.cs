@@ -14,9 +14,19 @@ public class TogglePhysicsButton : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        GetComponent<Renderer>().material.color = originalColor;
+        /*
         target.GetComponent<teleport>().setDest(state1);
         GetComponent<Renderer>().material.color = originalColor;
         target.GetComponent<teleport>().setColor(originalColor, originalIntens);
+        Debug.Log(name + " " + originalColor);
+        */
+        if (name == "Button 1.1")
+        {
+            target.GetComponent<teleport>().setDest(state1);
+            target.GetComponent<teleport>().setColor(originalColor, originalIntens);
+            Debug.Log(name + " " + originalColor);
+        }
     }
 
     // Update is called once per frame

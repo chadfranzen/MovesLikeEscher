@@ -5,7 +5,7 @@ using System;
 
 public class teleport : MonoBehaviour, PhysicsButtonTarget
 {
-    public GameObject destination, otherDest, buddy;
+    public GameObject destination, otherDest;
     public float [] intensities = new float[2];
     public Color[] colors = new Color[2];
     public bool maintainOrientation = true;
@@ -22,6 +22,11 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         if (GetComponent<Light>() != null)
         {
             GetComponent<Light>().color = colors[i];
+        }
+        if (name == "tele3a")
+        {
+            GetComponent<Light>().color = Color.white;
+            GetComponent<Light>().intensity = 0.3f;
         }
     }
 
@@ -79,11 +84,12 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 
     void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Teleporter " + name + " entered...");
+        Debug.Log("Teleporter " + name + " entered...");
     }
     void OnTriggerStay(Collider other)
     {
-        if(destination == null)
+
+        if (destination == null)
         {
             Debug.Log("null destination in " + name + "!");
         }
@@ -102,6 +108,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     && Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1
                     && Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1)
                     {
+                        Debug.Log("fuck");
                         tele(other);
                     }
 
@@ -109,12 +116,13 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                 else if ((Math.Pow(Vector3.Dot(this.transform.forward, other.transform.forward) 
                     / (this.transform.forward.magnitude * other.transform.forward.magnitude), 2 ) > 0.75))
                 {
+                    Debug.Log("Staying in trigger");
 
                     tele(other);
                 }
                 else
                 {
-                    //Debug.Log(name + " did not satisfy cosine requirement");
+                    Debug.Log(name + " did not satisfy cosine requirement");
                 }
             }
             else
@@ -135,7 +143,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 
     void OnTriggerExit(Collider other)
     {
-        //Debug.Log("Teleporter " + name + " exited...");
+        Debug.Log("Teleporter " + name + " exited...");
     }
 
     public void activate()

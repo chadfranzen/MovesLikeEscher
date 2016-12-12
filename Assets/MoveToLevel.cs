@@ -10,7 +10,7 @@ public class MoveToLevel : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         two.SetActive(false);
-        //three.SetActive(false);
+        three.SetActive(false);
         four.SetActive(false);
 	}
 	
@@ -20,7 +20,7 @@ public class MoveToLevel : MonoBehaviour {
         {
             one.SetActive(true);
             two.SetActive(false);
-            //three.SetActive(false);
+            three.SetActive(false);
             four.SetActive(false);
             player.transform.position = new Vector3(12.19f, 2.44f, 0);
             player.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
@@ -29,19 +29,26 @@ public class MoveToLevel : MonoBehaviour {
         {
             two.SetActive(true);
             one.SetActive(false);
-            //three.SetActive(false);
+            three.SetActive(false);
             four.SetActive(false);
             player.transform.position = new Vector3(3, 18.79f, 116);
             player.transform.rotation = Quaternion.Euler(90, -180, 90);
+
         }
         if (Input.GetKeyDown("3"))
         {
+            one.SetActive(false);
+            two.SetActive(false);
+            three.SetActive(true);
+            four.SetActive(false);
             //move to the third level
+            player.transform.position = new Vector3(65.20f, 5.15f, -104.32f);
+            player.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
         }
         if (Input.GetKeyDown("4"))
         {
             two.SetActive(false);
-            //three.SetActive(false);
+            three.SetActive(false);
             one.SetActive(false);
             four.SetActive(true);
             player.transform.position = new Vector3(-0.55f, -94.63f,-121.4f);

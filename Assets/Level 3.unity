@@ -23314,7 +23314,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-312478
+  m_Name: pb_Mesh-1416
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -27766,7 +27766,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-312484
+  m_Name: pb_Mesh13792
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -33690,7 +33690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1531012323}
-  state1: {fileID: 0}
+  state1: {fileID: 1531012323}
   state2: {fileID: 2102343677}
   originalColor: {r: 0.3455882, g: 0.3455882, b: 0.3455882, a: 0}
   newColor: {r: 1, g: 1, b: 0, a: 1}
@@ -45564,7 +45564,7 @@ GameObject:
   - 114: {fileID: 1531012327}
   m_Layer: 0
   m_Name: tele3a
-  m_TagString: Untagged
+  m_TagString: Teleporter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

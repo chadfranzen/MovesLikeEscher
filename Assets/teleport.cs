@@ -79,7 +79,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Teleporter " + name + " entered...");
+        //Debug.Log("Teleporter " + name + " entered...");
     }
     void OnTriggerStay(Collider other)
     {
@@ -93,8 +93,6 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         }
         if (cooldown <= 0 || Time.fixedTime - time > cooldown)
         {
-            Debug.Log("My forward:" + other.transform.forward);
-            Debug.Log("Tele forward:" + transform.forward);
             if (maintainOrientation)
             {
 
@@ -137,7 +135,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Teleporter " + name + " exited...");
+        //Debug.Log("Teleporter " + name + " exited...");
     }
 
     public void activate()
@@ -163,7 +161,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         GetComponent<Light>().intensity = intensity;
         destination.GetComponent<Light>().color = col;
         destination.GetComponent<Light>().intensity = intensity;
-        if (otherDest)
+        if (otherDest && otherDest.name != name)
         {
             otherDest.GetComponent<Light>().color = Color.white;
             otherDest.GetComponent<Light>().intensity = .3f;

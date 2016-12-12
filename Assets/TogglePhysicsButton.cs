@@ -31,13 +31,13 @@ public class TogglePhysicsButton : MonoBehaviour
         {
             return;
         }
-        if (!state)
+        if (!state && state2)
         {
             GetComponent<Renderer>().material.color = newColor;
             target.GetComponent<teleport>().setDest(state2);
             target.GetComponent<teleport>().setColor(newColor, newIntens);
         }
-        else 
+        else if(state1)
         {
             GetComponent<Renderer>().material.color = originalColor;
             target.GetComponent<teleport>().setDest(state1);

@@ -16,7 +16,6 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
     private int i;
 
     private float time = -1;
-	public bool newMode = true;
     // Use this for initialization
     void Start()
     {
@@ -45,39 +44,15 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         }
         if (cooldown <= 0 || Time.fixedTime - time > cooldown)
         {
-            if (setVisible != null)
+            if (maintainOrientation)
             {
-                setVisible.SetActive(true);
-            }
-			if (newMode)
-            {
-                var player = other.transform;
-                var from = transform;
-                var to = destination.transform;
-
-
-				player.position += to.position-from.position;
-                player.rotation *= to.rotation*Quaternion.Inverse(from.rotation);
-			}
-			else if (maintainOrientation)
-            {
-                /*if(other.tag == "Bullet" && !other.GetComponent<BulletScript>().teleported)
+                if ((Math.Pow(Vector3.Dot(this.transform.forward, other.transform.forward) 
+                    / (this.transform.forward.magnitude * other.transform.forward.magnitude), 2 ) > 0.75))
                 {
-                    Debug.Log("Found bullet!");
-                    Vector3 pos = other.transform.position;
-                    float vel = other.GetComponent<BulletScript>().speed;
-                    GameObject bullet = Instantiate(other.transform.gameObject);
-                    bullet.GetComponent<BulletScript>().teleported = true;
-                    //bullet.transform.position = pos;
-
-                    bullet.GetComponent<Rigidbody>().velocity = other.GetComponent<Rigidbody>().velocity;
-                    //bullet.transform.Translate(direction * 3);
-                }*/
-
-                if (Math.Abs(this.transform.forward.x - other.transform.forward.x) <= 1 &&
-                    Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1 &&
-                    Math.Abs(Math.Abs(this.transform.forward.z) - Math.Abs(other.transform.forward.z))<= 1)
-                {
+                    if (setVisible != null)
+                    {
+                        setVisible.SetActive(true);
+                    }
                     Debug.Log("Teleporting from " + name + " to " + destination.name + "...");
                     Transform oldParent = other.transform.parent;
                     other.transform.parent = this.transform;
@@ -112,7 +87,10 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     //other.transform.Translate(offSet);
 
                     //other.transform.Translate(new Vector3(offSet.x, 0, offSet.z), destination.transform);
-
+                    if (setInvisible != null)
+                    {
+                        setInvisible.SetActive(false);
+                    }
                 }
             }
             else
@@ -122,10 +100,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                 other.transform.eulerAngles = destination.transform.rotation.eulerAngles;
                 other.transform.Rotate(0, 180, 0);
             }
-            if (setInvisible != null)
-            {
-                setInvisible.SetActive(false);
-            }
+            
         }
         destination.GetComponent<teleport>().time = Time.fixedTime;
     }

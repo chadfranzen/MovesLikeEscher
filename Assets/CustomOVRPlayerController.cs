@@ -149,34 +149,37 @@ public class CustomOVRPlayerController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.DrawRay(transform.position, hit.normal * 10);
-            if (hit.normal != transform.up)
+            if (hit.collider.gameObject.tag != "Bullet")
             {
-                Vector3 rotateVector = Vector3.Cross(transform.up, hit.normal);
-                float rotateDegrees = Vector3.Angle(transform.up, hit.normal);
-                Debug.DrawRay(hit.point, hit.normal * 10, Color.green);
+                Debug.DrawRay(transform.position, hit.normal * 10);
+                if (hit.normal != transform.up)
+                {
+                    Vector3 rotateVector = Vector3.Cross(transform.up, hit.normal);
+                    float rotateDegrees = Vector3.Angle(transform.up, hit.normal);
+                    Debug.DrawRay(hit.point, hit.normal * 10, Color.green);
 
-                Vector3 oldPosition = transform.position;
-                Quaternion oldRotation = transform.rotation;
-                transform.Translate(0, -hit.distance, 0);
-                transform.RotateAround(transform.position, rotateVector, rotateDegrees);
-                transform.Translate(0, hit.distance, 0);
-                Quaternion newRotation = transform.rotation;
-                Vector3 newPosition = transform.position;
-
-
-
-                transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * rotationSpeed);
-                transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * rotationSpeed);
+                    Vector3 oldPosition = transform.position;
+                    Quaternion oldRotation = transform.rotation;
+                    transform.Translate(0, -hit.distance, 0);
+                    transform.RotateAround(transform.position, rotateVector, rotateDegrees);
+                    transform.Translate(0, hit.distance, 0);
+                    Quaternion newRotation = transform.rotation;
+                    Vector3 newPosition = transform.position;
 
 
-            }
 
-            // Adjust the player's height so it is always PlayerHeight meters above the ground.
-            if (!Mathf.Approximately(hit.distance, PlayerHeight) && !hit.collider.isTrigger)
-            {
-                float diff = PlayerHeight - hit.distance;
-                transform.Translate(0, diff, 0);
+                    transform.rotation = Quaternion.Slerp(oldRotation, newRotation, Time.deltaTime * rotationSpeed);
+                    transform.position = Vector3.Slerp(oldPosition, newPosition, Time.deltaTime * rotationSpeed);
+
+
+                }
+
+                // Adjust the player's height so it is always PlayerHeight meters above the ground.
+                if (!Mathf.Approximately(hit.distance, PlayerHeight) && !hit.collider.isTrigger)
+                {
+                    float diff = PlayerHeight - hit.distance;
+                    transform.Translate(0, diff, 0);
+                }
             }
 
         }

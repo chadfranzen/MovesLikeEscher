@@ -42,7 +42,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         {
             setVisible.SetActive(true);
         }
-        Debug.Log("Teleporting from " + name + " to " + destination.name + "...");
+        //Debug.Log("Teleporting from " + name + " to " + destination.name + "...");
         Transform oldParent = other.transform.parent;
         other.transform.parent = this.transform;
 
@@ -72,6 +72,7 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
             bullet.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
         }
 
+        
         //other.transform.position = destination.transform.position;
         //other.transform.Translate(offSet);
 
@@ -84,15 +85,16 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Teleporter " + name + " entered...");
+        //Debug.Log("Teleporter " + name + " entered...");
     }
     void OnTriggerStay(Collider other)
     {
-
+        //Debug.Log(destination);
         if (destination == null)
         {
-            Debug.Log("null destination in " + name + "!");
+            return;
         }
+        
         if (other.tag == "Bullet")
         {
             return;
@@ -108,21 +110,15 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
                     && Math.Abs(this.transform.forward.y - other.transform.forward.y) <= 1
                     && Math.Abs(this.transform.forward.z - other.transform.forward.z) <= 1)
                     {
-                        Debug.Log("fuck");
                         tele(other);
                     }
 
                 }
-                else if ((Math.Pow(Vector3.Dot(this.transform.forward, other.transform.forward) 
-                    / (this.transform.forward.magnitude * other.transform.forward.magnitude), 2 ) > 0.75))
-                {
-                    Debug.Log("Staying in trigger");
-
-                    tele(other);
-                }
+                // (Math.Pow(Vector3.Dot(this.transform.forward, other.transform.forward) 
+                //  / (this.transform.forward.magnitude * other.transform.forward.magnitude), 2 ) > 0.75)
                 else
                 {
-                    Debug.Log(name + " did not satisfy cosine requirement");
+                    tele(other);
                 }
             }
             else
@@ -138,7 +134,9 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         {
             //Debug.Log(name + " not cooled down!");
         }
-        
+        other.transform.parent = null;
+        other.transform.localScale = new Vector3(1, 1, 1);
+
     }
 
     void OnTriggerExit(Collider other)
@@ -159,9 +157,9 @@ public class teleport : MonoBehaviour, PhysicsButtonTarget
         GameObject temp = destination;
         destination = d;
         otherDest = temp;
-        Debug.Log("Set destination to " + d.name);
+        //Debug.Log("Set destination to " + d.name);
         d.GetComponent<teleport>().destination = gameObject;
-        Debug.Log("Set other's destination to " + gameObject.name);
+        //Debug.Log("Set other's destination to " + gameObject.name);
     }
     public void setColor(Color col, float intensity)
     {
